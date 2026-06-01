@@ -1,0 +1,65 @@
+generator client {
+  provider        = "prisma-client"
+  output          = "./generated/prisma"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [pgvector(map: "vector")]
+}
+
+model Category {
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  questions   Question[]
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  @@map("categories")
+}
+
+model Question {
+  id               Int               @id @default(autoincrement())
+  categoryId       Int               @map("category_id")
+  category         Category          @relation(fields: [categoryId], references: [id])
+  title            String
+  body             String
+  difficulty       Difficulty        @default(MEDIUM)
+  tags             String[]
+  referenceAnswers ReferenceAnswer[]
+  sessionAnswers   SessionAnswer[]
+  createdAt        DateTime          @default(now()) @map("created_at")
+
+  @@map("questions")
+}
+
+model ReferenceAnswer {
+  id         Int                        @id @default(autoincrement())
+  questionId Int                        @map("question_id")
+  question   Question                   @relation(fields: [questionId], references: [id])
+  body       String
+  embedding  Unsupported("vector(1024)")?
+  createdAt  DateTime                   @default(now()) @map("created_at")
+
+  @@map("reference_answers")
+}
+
+model SessionAnswer {
+  id         Int      @id @default(autoincrement())
+  questionId Int      @map("question_id")
+  question   Question @relation(fields: [questionId], references: [id])
+  userAnswer String   @map("user_answer")
+  aiScore    Int?     @map("ai_score")
+  aiFeedback String?  @map("ai_feedback")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("session_answers")
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
