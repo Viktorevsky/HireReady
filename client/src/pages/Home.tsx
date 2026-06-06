@@ -14,7 +14,6 @@ export default function Home() {
 
       {/* Герой */}
       <div style={{ textAlign: 'center', padding: '64px 32px 48px', position: 'relative' }}>
-        {/* Свечение */}
         <div style={{ position: 'absolute', top: '40px', left: '50%', transform: 'translateX(-50%)', width: '320px', height: '120px', background: 'radial-gradient(ellipse, rgba(224,112,64,0.18) 0%, transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
 
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', border: '1px solid #5a2d10', borderRadius: '999px', padding: '5px 14px', fontSize: '12px', color: '#e07040', marginBottom: '28px' }}>
@@ -29,13 +28,14 @@ export default function Home() {
           Отвечай на вопросы, получай AI-оценку и отслеживай прогресс
         </p>
 
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <button onClick={() => navigate('/categories')}
             style={{ background: '#e07040', border: 'none', borderRadius: '8px', padding: '12px 28px', color: '#fff', fontSize: '15px', cursor: 'pointer', fontWeight: 500 }}>
             Начать практику →
           </button>
-          <button style={{ background: 'none', border: '1px solid #3d1a08', borderRadius: '8px', padding: '12px 28px', color: '#8a6a58', fontSize: '15px', cursor: 'pointer' }}>
-            Как это работает
+          <button onClick={() => navigate('/mock')}
+            style={{ background: 'none', border: '1px solid #e07040', borderRadius: '8px', padding: '12px 28px', color: '#e07040', fontSize: '15px', cursor: 'pointer', fontWeight: 500 }}>
+            🎯 Mock Interview
           </button>
         </div>
       </div>
