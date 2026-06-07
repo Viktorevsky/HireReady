@@ -10,11 +10,11 @@ export default async function answersRoutes(app: FastifyInstance) {
 
     const embedding = await getEmbedding(userAnswer)
 
-    const similarAnswers: any[] = await prisma.$queryRaw`
-        SELECT body FROM reference_answers
-        ORDER BY embedding <=> ${JSON.stringify(embedding)}::vector
-        LIMIT 3
-    `
+   const similarAnswers: any[] = await prisma.$queryRaw`
+    SELECT body FROM reference_answers
+    WHERE question_id = ${questionId}
+    ORDER BY embedding <=> ${JSON.stringify(embedding)}::vector
+    LIMIT 3`
 
     const question: any = await prisma.question.findUnique({
       where: { id: questionId }

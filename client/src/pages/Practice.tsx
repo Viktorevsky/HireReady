@@ -14,8 +14,8 @@ export default function Practice() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`http://localhost:3000/questions/${id}`).then(res => res.json()),
-      fetch('http://localhost:3000/sessions', { method: 'POST' }).then(res => res.json())
+      fetch(`/questions/${id}`).then(res => res.json()),
+      fetch('/sessions', { method: 'POST' }).then(res => res.json())
     ]).then(([questionData, sessionData]) => {
       setQuestion(questionData)
       setSessionId(sessionData.sessionId)
@@ -25,7 +25,7 @@ export default function Practice() {
 
   const handleSubmit = async () => {
     setSubmitting(true)
-    const res = await fetch('http://localhost:3000/answers', {
+    const res = await fetch('/answers', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ questionId: Number(id), userAnswer: answer, sessionId })

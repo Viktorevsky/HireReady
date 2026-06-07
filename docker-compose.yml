@@ -12,8 +12,18 @@ services:
 
   redis:
     image: redis:8-alpine
+
+  backend:
+    build: .
     ports:
-      - "6379:6379"
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env
+    environment:
+      - REDIS_HOST=redis
 
 volumes:
   pgdata:

@@ -46,7 +46,7 @@ function SetupScreen({ onStart }: { onStart: (categoryId: number, count: number)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:3000/categories')
+    fetch('/categories')
       .then(res => res.json())
       .then(data => { setCategories(data); setLoading(false) })
   }, [])
@@ -349,7 +349,7 @@ export default function Mock() {
 
   // Создаём сессию и переходим к интервью
   const handleStart = async (categoryId: number, questionCount: number) => {
-    const res = await fetch('http://localhost:3000/mock/sessions', {
+    const res = await fetch('/mock/sessions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ categoryId, questionCount }),
@@ -365,7 +365,7 @@ export default function Mock() {
 
   // Отправляем ответ, получаем следующий вопрос или переходим к отчёту
   const handleAnswer = async (questionId: number, userAnswer: string) => {
-    const res = await fetch(`http://localhost:3000/mock/sessions/${sessionId}/answers`, {
+    const res = await fetch(`/mock/sessions/${sessionId}/answers`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ questionId, userAnswer }),
@@ -375,7 +375,7 @@ export default function Mock() {
     if (data.finished) {
       // Запрашиваем отчёт
       setLoadingReport(true)
-      const reportRes = await fetch(`http://localhost:3000/mock/sessions/${sessionId}/report`)
+      const reportRes = await fetch(`/mock/sessions/${sessionId}/report`)
       const reportData = await reportRes.json()
       setReport(reportData)
       setLoadingReport(false)

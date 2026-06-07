@@ -8,7 +8,7 @@ export default function Categories() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch('http://localhost:3000/categories')
+    fetch('/categories')
       .then(res => res.json())
       .then(data => { setCategories(data); setLoading(false) })
   }, [])
